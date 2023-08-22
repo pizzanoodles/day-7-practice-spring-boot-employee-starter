@@ -32,5 +32,11 @@ public class EmployeeController {
     public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
         return employeeRepository.updateEmployee(id, updatedEmployee);
     }
-
+    @DeleteMapping("/deleteEmployee/{id}")
+    public String deleteEmployee(@PathVariable Long id) {
+        if (!employeeRepository.deleteEmployee(id)){
+            throw new EmployeeNotFoundException();
+        }
+        return "Successfully deleted.";
+    }
 }
