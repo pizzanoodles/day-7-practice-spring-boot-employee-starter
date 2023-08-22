@@ -26,4 +26,8 @@ public class CompanyController {
     public List<Company> listCompaniesByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
         return companyRepository.listByPage(pageNumber, pageSize);
     }
+    @PostMapping
+    public Company addCompany(@RequestBody Company company) {
+        return companyRepository.addCompany(company);
+    }
 }
