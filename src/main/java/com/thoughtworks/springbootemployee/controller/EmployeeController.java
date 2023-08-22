@@ -28,5 +28,9 @@ public class EmployeeController {
     public Employee createEmployee(@RequestBody Employee employee){
         return employeeRepository.createEmployee(employee);
     }
+    @PutMapping("/updateEmployee/{id}")
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
+        return employeeRepository.updateEmployee(id, updatedEmployee);
+    }
 
 }
