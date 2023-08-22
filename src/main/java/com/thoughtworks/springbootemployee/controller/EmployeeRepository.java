@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -46,5 +47,17 @@ public class EmployeeRepository {
                 .mapToLong(Employee::getId)
                 .max()
                 .orElse(0L) + 1;
+    }
+
+    public Employee updateEmployee(Long id, Employee updatedEmployee) {
+        Employee employeeToBeUpdated = employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
+        employeeToBeUpdated.setName(updatedEmployee.getName() != null ? updatedEmployee.getName() : employeeToBeUpdated.getName());
+        employeeToBeUpdated.setAge(updatedEmployee.getAge() != null ? updatedEmployee.getAge() : employeeToBeUpdated.getAge());
+        employeeToBeUpdated.setGender(updatedEmployee.getGender() != null ? updatedEmployee.getGender() : employeeToBeUpdated.getGender());
+        employeeToBeUpdated.setSalary(updatedEmployee.getSalary() != null ? updatedEmployee.getSalary() : employeeToBeUpdated.getSalary());
+        return employeeToBeUpdated;
     }
 }
