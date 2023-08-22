@@ -58,4 +58,13 @@ public class CompanyRepository {
                 .max()
                 .orElse(0L) + 1;
     }
+
+    public Company updateCompany(Long id, Company updatedCompany) {
+        Company companyToBeUpdated = companies.stream()
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .orElseThrow(CompanyNotFoundException::new);
+        companyToBeUpdated.setName(updatedCompany.getName() != null ? updatedCompany.getName() : companyToBeUpdated.getName());
+        return companyToBeUpdated;
+    }
 }
