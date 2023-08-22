@@ -22,4 +22,8 @@ public class CompanyController {
     public List<Employee> employeesbyCompany(@PathVariable Long id) {
         return companyRepository.getEmployeesByCompanyId(id);
     }
+    @GetMapping(params = {"pageNumber", "pageSize"})
+    public List<Company> listCompaniesByPage(@PathVariable Long pageNumber, @PathVariable Long pageSize) {
+        return companyRepository.listByPage(pageNumber, pageSize);
+    }
 }
