@@ -36,14 +36,15 @@ public class EmployeeRepository {
 
     public Employee createEmployee(Employee employee) {
         Long maxId = generateId();
-        employees.add(new Employee(++maxId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary()));
-        return employee;
+        Employee employeeToBeAdded = new Employee(++maxId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
+        employees.add(employeeToBeAdded);
+        return employeeToBeAdded;
     }
 
     private Long generateId() {
         return employees.stream()
-                .max(Comparator.comparingLong(Employee::getId))
-                .orElseThrow(EmployeeNotFoundException::new)
-                .getId();
+                .mapToLong(Employee::getId)
+                .max()
+                .orElse(0L) + 1;
     }
 }
