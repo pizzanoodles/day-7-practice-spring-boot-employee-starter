@@ -3,9 +3,7 @@ package com.thoughtworks.springbootemployee.controller;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -13,11 +11,11 @@ public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
 
     static {
-        employees.add(new Employee(1L, "Alice", 30, "Female", 5000));
-        employees.add(new Employee(2L, "Bob", 31, "Male", 6000));
-        employees.add(new Employee(3L, "Carl", 32, "Male", 7000));
-        employees.add(new Employee(4L, "David", 33, "Male", 8000));
-        employees.add(new Employee(5L, "Elen", 34, "Female", 9000));
+        employees.add(new Employee(1L, 2L, "Alice", 30, "Female", 5000));
+        employees.add(new Employee(2L, 2L, "Bob", 31, "Male", 6000));
+        employees.add(new Employee(3L, 1L, "Carl", 32, "Male", 7000));
+        employees.add(new Employee(4L, 1L, "David", 33, "Male", 8000));
+        employees.add(new Employee(5L, 5L, "Elen", 34, "Female", 9000));
     }
 
     public List<Employee> listAll() {
@@ -39,7 +37,7 @@ public class EmployeeRepository {
 
     public Employee createEmployee(Employee employee) {
         Long maxId = generateId();
-        Employee employeeToBeAdded = new Employee(++maxId, employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
+        Employee employeeToBeAdded = new Employee(++maxId, employee.getCompanyId(), employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
         employees.add(employeeToBeAdded);
         return employeeToBeAdded;
     }
@@ -57,6 +55,7 @@ public class EmployeeRepository {
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
         employeeToBeUpdated.setName(updatedEmployee.getName() != null ? updatedEmployee.getName() : employeeToBeUpdated.getName());
+        employeeToBeUpdated.setCompanyId(updatedEmployee.getCompanyId() != null ? updatedEmployee.getCompanyId() : employeeToBeUpdated.getCompanyId());
         employeeToBeUpdated.setAge(updatedEmployee.getAge() != null ? updatedEmployee.getAge() : employeeToBeUpdated.getAge());
         employeeToBeUpdated.setGender(updatedEmployee.getGender() != null ? updatedEmployee.getGender() : employeeToBeUpdated.getGender());
         employeeToBeUpdated.setSalary(updatedEmployee.getSalary() != null ? updatedEmployee.getSalary() : employeeToBeUpdated.getSalary());
