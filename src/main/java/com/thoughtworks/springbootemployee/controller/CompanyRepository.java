@@ -12,6 +12,7 @@ public class CompanyRepository {
     @Autowired
     EmployeeRepository employeeRepository;
     private static final List<Company> companies = new ArrayList<>();
+
     static {
         companies.add(new Company(1L, "Orient Overseas Container Line"));
         companies.add(new Company(2L, "COSCO Shipping Lines"));
@@ -19,6 +20,7 @@ public class CompanyRepository {
         companies.add(new Company(4L, "Advanced Micro Devices Inc."));
         companies.add(new Company(5L, "Nvidia Corporation"));
     }
+
     public List<Company> listAllCompanies() {
         return companies;
     }
@@ -29,6 +31,7 @@ public class CompanyRepository {
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
     }
+
     public List<Employee> getEmployeesByCompanyId(Long id) {
         return employeeRepository.listAll()
                 .stream()
@@ -41,5 +44,18 @@ public class CompanyRepository {
                 .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
+    }
+
+    public Company addCompany(Company company) {
+        Company companyToBeAdded = new Company(generateId(), company.getName());
+        companies.add(companyToBeAdded);
+        return companyToBeAdded;
+    }
+
+    private Long generateId() {
+        return companies.stream()
+                .mapToLong(Company::getId)
+                .max()
+                .orElse(0L) + 1;
     }
 }
