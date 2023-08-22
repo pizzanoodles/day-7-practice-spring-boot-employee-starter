@@ -34,4 +34,11 @@ public class CompanyController {
     public Company updateCompany(@PathVariable Long id, @RequestBody Company updatedCompany) {
         return companyRepository.updateCompany(id, updatedCompany);
     }
+    @DeleteMapping("/deleteCompany/{id}")
+    public String deleteCompany(@PathVariable Long id) {
+        if(!companyRepository.deleteCompany(id)) {
+            throw new CompanyNotFoundException();
+        }
+        return "Successfully deleted.";
+    }
 }
