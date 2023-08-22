@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,4 +23,10 @@ public class EmployeeController {
     public List<Employee> findByGender(@RequestParam String gender) {
         return employeeRepository.findByGender(gender);
     }
+
+    @PostMapping()
+    public Employee createEmployee(@RequestBody Employee employee){
+        return employeeRepository.createEmployee(employee);
+    }
+
 }
