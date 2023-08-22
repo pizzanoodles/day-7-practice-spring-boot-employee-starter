@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 public class Employee {
-    private Long id;
+    private final Long id;
     private Long companyId;
     private String name;
     private Integer age;

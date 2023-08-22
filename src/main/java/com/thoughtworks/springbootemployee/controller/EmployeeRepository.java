@@ -18,24 +18,24 @@ public class EmployeeRepository {
         employees.add(new Employee(5L, 5L, "Elen", 34, "Female", 9000));
     }
 
-    public List<Employee> listAll() {
+    public List<Employee> listAllEmployees() {
         return employees;
     }
 
-    public Employee findById(Long id) {
+    public Employee findEmployeeById(Long id) {
         return employees.stream()
                 .filter(employee -> employee.getId().equals(id))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public List<Employee> findByGender(String gender) {
+    public List<Employee> findEmployeeByGender(String gender) {
         return employees.stream()
                 .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
     }
 
-    public Employee createEmployee(Employee employee) {
+    public Employee addEmployee(Employee employee) {
         Employee employeeToBeAdded = new Employee(generateId(), employee.getCompanyId(), employee.getName(), employee.getAge(), employee.getGender(), employee.getSalary());
         employees.add(employeeToBeAdded);
         return employeeToBeAdded;
@@ -68,7 +68,7 @@ public class EmployeeRepository {
                 .orElseThrow(EmployeeNotFoundException::new));
     }
 
-    public List<Employee> listByPage(Long pageNumber, Long pageSize) {
+    public List<Employee> listEmployeesByPage(Long pageNumber, Long pageSize) {
         return employees.stream()
                 .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)

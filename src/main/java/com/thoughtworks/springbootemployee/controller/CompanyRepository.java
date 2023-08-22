@@ -33,13 +33,13 @@ public class CompanyRepository {
     }
 
     public List<Employee> getEmployeesByCompanyId(Long id) {
-        return employeeRepository.listAll()
+        return employeeRepository.listAllEmployees()
                 .stream()
                 .filter(employee -> employee.getCompanyId().equals(id))
                 .collect(Collectors.toList());
     }
 
-    public List<Company> listByPage(Long pageNumber, Long pageSize) {
+    public List<Company> listCompaniesByPage(Long pageNumber, Long pageSize) {
         return companies.stream()
                 .skip((pageNumber - 1) * pageSize)
                 .limit(pageSize)

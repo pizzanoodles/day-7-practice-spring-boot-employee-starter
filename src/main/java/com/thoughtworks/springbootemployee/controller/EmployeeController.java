@@ -1,7 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,23 +12,23 @@ public class EmployeeController {
     private EmployeeRepository employeeRepository;
 
     @GetMapping()
-    public List<Employee> listAll() {
-        return employeeRepository.listAll();
+    public List<Employee> listAllEmployees() {
+        return employeeRepository.listAllEmployees();
     }
 
     @GetMapping("/{id}")
-    public Employee findById(@PathVariable Long id) {
-        return employeeRepository.findById(id);
+    public Employee findEmployeeById(@PathVariable Long id) {
+        return employeeRepository.findEmployeeById(id);
     }
 
     @GetMapping(params = {"gender"})
-    public List<Employee> findByGender(@RequestParam String gender) {
-        return employeeRepository.findByGender(gender);
+    public List<Employee> findEmployeeByGender(@RequestParam String gender) {
+        return employeeRepository.findEmployeeByGender(gender);
     }
 
     @PostMapping()
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeRepository.createEmployee(employee);
+    public Employee addEmployee(@RequestBody Employee employee) {
+        return employeeRepository.addEmployee(employee);
     }
 
     @PutMapping("/updateEmployee/{id}")
@@ -46,7 +45,7 @@ public class EmployeeController {
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
-    public List<Employee> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
-        return employeeRepository.listByPage(pageNumber, pageSize);
+    public List<Employee> listEmployeesByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
+        return employeeRepository.listEmployeesByPage(pageNumber, pageSize);
     }
 }
