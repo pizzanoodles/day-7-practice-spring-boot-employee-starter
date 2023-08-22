@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 @Repository
 public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
+
     static {
         employees.add(new Employee(1L, "Alice", 30, "Female", 5000));
         employees.add(new Employee(2L, "Bob", 31, "Male", 6000));
@@ -18,6 +19,7 @@ public class EmployeeRepository {
         employees.add(new Employee(4L, "David", 33, "Male", 8000));
         employees.add(new Employee(5L, "Elen", 34, "Female", 9000));
     }
+
     public List<Employee> listAll() {
         return employees;
     }
@@ -66,5 +68,12 @@ public class EmployeeRepository {
                 .filter(employee -> employee.getId().equals(id))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new));
+    }
+
+    public List<Employee> listByPage(Long pageNumber, Long pageSize) {
+        return employees.stream()
+                .skip((pageNumber - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
