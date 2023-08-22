@@ -1,12 +1,16 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class CompanyRepository {
+    @Autowired
+    EmployeeRepository employeeRepository;
     private static final List<Company> companies = new ArrayList<>();
     static {
         companies.add(new Company(1L, "Orient Overseas Container Line"));
@@ -24,5 +28,11 @@ public class CompanyRepository {
                 .filter(company -> company.getId().equals(id))
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
+    }
+    public List<Employee> getEmployeesByCompanyId(Long id) {
+        return employeeRepository.listAll()
+                .stream()
+                .filter(employee -> employee.getCompanyId().equals(id))
+                .collect(Collectors.toList());
     }
 }
