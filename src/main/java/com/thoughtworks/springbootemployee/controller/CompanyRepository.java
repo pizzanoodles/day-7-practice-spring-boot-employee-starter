@@ -67,4 +67,11 @@ public class CompanyRepository {
         companyToBeUpdated.setName(updatedCompany.getName() != null ? updatedCompany.getName() : companyToBeUpdated.getName());
         return companyToBeUpdated;
     }
+
+    public boolean deleteCompany(Long id) {
+        return companies.remove(companies.stream()
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .orElseThrow(CompanyNotFoundException::new));
+    }
 }
