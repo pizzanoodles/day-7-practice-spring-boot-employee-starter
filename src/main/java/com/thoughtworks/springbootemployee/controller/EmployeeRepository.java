@@ -60,4 +60,11 @@ public class EmployeeRepository {
         employeeToBeUpdated.setSalary(updatedEmployee.getSalary() != null ? updatedEmployee.getSalary() : employeeToBeUpdated.getSalary());
         return employeeToBeUpdated;
     }
+
+    public boolean deleteEmployee(Long id) {
+        return employees.remove(employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new));
+    }
 }
