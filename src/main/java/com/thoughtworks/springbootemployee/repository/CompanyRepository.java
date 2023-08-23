@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 @Repository
 public class CompanyRepository {
+    public static final int INCREMENT = 1;
+    public static final long STARTING_ID = 0L;
     @Autowired
     EmployeeRepository employeeRepository;
     private static final List<Company> companies = new ArrayList<>();
@@ -44,7 +46,7 @@ public class CompanyRepository {
 
     public List<Company> listCompaniesByPage(Long pageNumber, Long pageSize) {
         return companies.stream()
-                .skip((pageNumber - 1) * pageSize)
+                .skip((pageNumber - INCREMENT) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
@@ -59,7 +61,7 @@ public class CompanyRepository {
         return companies.stream()
                 .mapToLong(Company::getId)
                 .max()
-                .orElse(0L) + 1; // TODO: you can make these into const - create a separate Const class
+                .orElse(STARTING_ID) + INCREMENT; // TODO: you can make these into const - create a separate Const class
     }
 
     public Company updateCompany(Long id, Company updatedCompany) {
