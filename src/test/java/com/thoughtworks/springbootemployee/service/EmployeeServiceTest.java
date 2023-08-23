@@ -1,10 +1,14 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,7 +32,7 @@ public class EmployeeServiceTest {
         ;
         when(mockedEmployeeRepository.addEmployee(employee)).thenReturn(savedEmployee);
         //when
-        Employee employeeResponse = employeeService.create(employee);
+        Employee employeeResponse = employeeService.createEmployee(employee);
 
         //then
         assertEquals(savedEmployee.getId(), employeeResponse.getId());
@@ -44,7 +48,7 @@ public class EmployeeServiceTest {
         Employee employee = new Employee(null, 2L, "Jens", 17, "Male", 1000);
         //when
         EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () -> {
-            employeeService.create(employee);
+            employeeService.createEmployee(employee);
         });
         //then
         assertEquals("Employee must be 18~65 years old", employeeCreateException.getMessage());
@@ -56,7 +60,7 @@ public class EmployeeServiceTest {
         Employee employee = new Employee(null, 2L, "Jens", 100, "Male", 1000);
         //when
         EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () -> {
-            employeeService.create(employee);
+            employeeService.createEmployee(employee);
         });
         //then
         assertEquals("Employee must be 18~65 years old", employeeCreateException.getMessage());
@@ -70,7 +74,7 @@ public class EmployeeServiceTest {
         savedEmployee.setActiveStatus(Boolean.TRUE);
         when(mockedEmployeeRepository.addEmployee(employee)).thenReturn(savedEmployee);
         //when
-        Employee employeeResponse = employeeService.create(employee);
+        Employee employeeResponse = employeeService.createEmployee(employee);
 
         //then
         assertEquals(savedEmployee.getId(), employeeResponse.getId());
@@ -88,7 +92,7 @@ public class EmployeeServiceTest {
         employee.setActiveStatus(Boolean.TRUE);
         when(mockedEmployeeRepository.findEmployeeById(employee.getId())).thenReturn(employee);
         //when
-        employeeService.delete(employee.getId());
+        employeeService.deleteEmployee(employee.getId());
         //then
         verify(mockedEmployeeRepository).updateEmployee(eq(employee.getId()), argThat(tempEmployee -> {
             assertFalse(tempEmployee.isActive());
@@ -98,5 +102,17 @@ public class EmployeeServiceTest {
             assertEquals(1000, tempEmployee.getSalary());
             return true;
         }));
+    }
+
+    @Test
+    void should_return_updated_employee_when_update_employees_given_employee_id_and_updated_employee() {
+        //given
+        Employee oldEmployee = new Employee(1L, 2L, "Jens", 23, "Male", 1000);
+        Employee updatedEmployee = new Employee(1L, 2L, "Jens", 72, "Male", 2000000);
+        when(mockedEmployeeRepository.updateEmployee(oldEmployee.getId(), updatedEmployee)).thenReturn(updatedEmployee);
+        //when
+        Employee updateResponse = employeeService.updateEmployee(oldEmployee.getId(), updatedEmployee);
+        //then
+        assertNotNull(updateResponse);
     }
 }
