@@ -108,7 +108,9 @@ public class EmployeeServiceTest {
         //given
         Employee oldEmployee = new Employee(1L, 2L, "Jens", 23, "Male", 1000);
         Employee updatedEmployee = new Employee(1L, 2L, "Jens", 72, "Male", 2000000);
+        updatedEmployee.setActiveStatus(Boolean.TRUE);
         when(mockedEmployeeRepository.updateEmployee(oldEmployee.getId(), updatedEmployee)).thenReturn(updatedEmployee);
+        when(mockedEmployeeRepository.findEmployeeById(updatedEmployee.getId())).thenReturn(updatedEmployee);
         //when
         Employee updateResponse = employeeService.updateEmployee(oldEmployee.getId(), updatedEmployee);
         //then
