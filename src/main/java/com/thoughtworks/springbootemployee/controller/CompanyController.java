@@ -1,6 +1,8 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +34,7 @@ public class CompanyController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Company addCompany(@RequestBody Company company) {
         return companyRepository.addCompany(company);
     }
@@ -42,6 +45,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/deleteCompany/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String deleteCompany(@PathVariable Long id) {
         if (!companyRepository.deleteCompany(id)) {
             throw new CompanyNotFoundException();

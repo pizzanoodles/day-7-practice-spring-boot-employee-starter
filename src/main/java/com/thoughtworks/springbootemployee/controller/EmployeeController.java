@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class EmployeeController {
     }
 
     @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee addEmployee(@RequestBody Employee employee) {
         return employeeRepository.addEmployee(employee);
     }
@@ -37,6 +39,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String deleteEmployee(@PathVariable Long id) {
         if (!employeeRepository.deleteEmployee(id)) {
             throw new EmployeeNotFoundException();
