@@ -9,6 +9,17 @@ public class Employee {
     private Integer age;
     private String gender;
     private Integer salary;
+    private boolean isActive;
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+
+    public void setActiveStatus(boolean activeStatus) {
+        this.isActive = activeStatus;
+    }
+
 
     public Employee(Long id, Long companyId, String name, Integer age, String gender, Integer salary) {
         this.id = id;
