@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

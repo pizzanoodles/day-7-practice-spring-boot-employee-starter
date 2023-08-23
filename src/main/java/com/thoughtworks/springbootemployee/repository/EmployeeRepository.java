@@ -1,6 +1,6 @@
 package com.thoughtworks.springbootemployee.repository;
 
-import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Repository;
 
@@ -60,11 +60,11 @@ public class EmployeeRepository {
         return employeeToBeUpdated;
     }
 
-    public boolean deleteEmployee(Long id) {
-        return employees.remove(employees.stream()
-                .filter(employee -> employee.getId().equals(id))
-                .findFirst()
-                .orElseThrow(EmployeeNotFoundException::new));
+    public Employee deleteEmployee(Long id) {
+        Employee employeeToBeDeleted = findEmployeeById(id);
+        employeeToBeDeleted.setActiveStatus(Boolean.FALSE);
+        updateEmployee(id, employeeToBeDeleted);
+        return employeeToBeDeleted;
     }
 
     public List<Employee> listEmployeesByPage(Long pageNumber, Long pageSize) {
