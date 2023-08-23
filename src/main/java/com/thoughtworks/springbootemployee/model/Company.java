@@ -4,7 +4,7 @@ public class Company {
     private final Long id;
     private String name;
 
-    public Company(long id, String name) {
+    public Company(Long id, String name) {
         this.id = id;
         this.name = name;
     }
