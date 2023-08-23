@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class EmployeeServiceTest {
     private EmployeeService employeeService;
@@ -67,7 +67,7 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee(null, 2L, "Jens", 23, "Male", 1000);
         Employee savedEmployee = new Employee(1L, 2L, "Jens", 23, "Male", 1000);
-        ;
+        savedEmployee.setActiveStatus(Boolean.TRUE);
         when(mockedEmployeeRepository.addEmployee(employee)).thenReturn(savedEmployee);
         //when
         Employee employeeResponse = employeeService.create(employee);
