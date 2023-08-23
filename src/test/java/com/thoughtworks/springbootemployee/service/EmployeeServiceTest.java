@@ -80,4 +80,23 @@ public class EmployeeServiceTest {
         assertEquals(1000, employeeResponse.getSalary());
         assertTrue(employeeResponse.isActive());
     }
+
+    @Test
+    void should_return_false_when_delete_given_employee_id_to_be_deleted() {
+        //given
+        Employee employee = new Employee(1L, 2L, "Jens", 23, "Male", 1000);
+        employee.setActiveStatus(Boolean.TRUE);
+        when(mockedEmployeeRepository.findEmployeeById(employee.getId())).thenReturn(employee);
+        //when
+        employeeService.delete(employee.getId());
+        //then
+        verify(mockedEmployeeRepository).updateEmployee(eq(employee.getId()), argThat(tempEmployee -> {
+            assertFalse(tempEmployee.isActive());
+            assertEquals("Jens", tempEmployee.getName());
+            assertEquals(23, tempEmployee.getAge());
+            assertEquals("Male", tempEmployee.getGender());
+            assertEquals(1000, tempEmployee.getSalary());
+            return true;
+        }));
+    }
 }
