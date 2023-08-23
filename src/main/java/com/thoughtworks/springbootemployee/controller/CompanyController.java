@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-// TODO: removed unused imports and you can add SupressWarning("all") annotation
+@SuppressWarnings("all")
 @RequestMapping("/companies")
 @RestController
 public class CompanyController {

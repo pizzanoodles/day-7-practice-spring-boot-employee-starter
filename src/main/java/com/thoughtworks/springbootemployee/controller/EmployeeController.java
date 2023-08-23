@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// TODO: you can add SupressWarning("all") annotation
 
+@SuppressWarnings("all")
 @RequestMapping("/employees")
 @RestController
 public class EmployeeController {
