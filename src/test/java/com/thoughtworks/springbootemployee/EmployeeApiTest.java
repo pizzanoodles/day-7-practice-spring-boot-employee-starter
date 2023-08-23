@@ -133,4 +133,24 @@ public class EmployeeApiTest {
                 .andExpect(jsonPath("$.age").value(72))
                 .andExpect(jsonPath("$.salary").value(2000000));
     }
+
+    @Test
+    void should_return_list_of_employees_when_get_employees_given_pageNumber_and_pageSize() throws Exception {
+        //given
+        Long pageNumber = 1L;
+        Long pageSize = 2L;
+        Employee employee1 = employeeRepository.addEmployee(new Employee(0L, 2L, "Jens", 23, "Male", 12));
+        Employee employee2 = employeeRepository.addEmployee(new Employee(0L, 3L, "Ron", 23, "Male", 34));
+        employeeRepository.addEmployee(new Employee(0L, 1L, "Kenneth", 23, "Male", 56));
+        MultiValueMap<String, String> paramsMap = new LinkedMultiValueMap<>();
+        paramsMap.add("pageNumber", pageNumber.toString());
+        paramsMap.add("pageSize", pageSize.toString());
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees").params(paramsMap))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].name").value(employee1.getName()))
+                .andExpect(jsonPath("$[1].name").value(employee2.getName()));
+        //then
+    }
 }
