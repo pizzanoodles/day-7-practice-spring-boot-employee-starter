@@ -37,4 +37,8 @@ public class CompanyService {
     public Company updateCompany(Long id, Company newCompany) {
         return companyRepository.updateCompany(id, newCompany);
     }
+
+    public boolean deleteCompany(Long id) {
+        return companyRepository.deleteCompany(id);
+    }
 }
