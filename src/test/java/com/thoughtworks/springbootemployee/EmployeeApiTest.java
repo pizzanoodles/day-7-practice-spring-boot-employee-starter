@@ -57,7 +57,14 @@ public class EmployeeApiTest {
                 .andExpect(jsonPath("$.age").value(employeeJens.getAge()))
                 .andExpect(jsonPath("$.salary").value(employeeJens.getSalary()))
                 .andExpect(jsonPath("$.companyId").value(employeeJens.getCompanyId()));
-
-        //then
+    }
+    @Test
+    void should_return_404_not_found_when_get_employee__given_invalid_id() throws Exception {
+        //given
+        Employee employeeJens = employeeRepository.addEmployee(new Employee(0L, 2L, "Jens", 23, "Male", 123123));
+        employeeRepository.addEmployee(new Employee(0L, 2L, "Ron", 23, "Male", 456456));
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + 99L))
+                .andExpect(status().isNotFound());
     }
 }
