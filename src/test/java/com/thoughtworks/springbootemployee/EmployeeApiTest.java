@@ -94,13 +94,23 @@ public class EmployeeApiTest {
         Employee newEmployee = new Employee(0L, 3L, "Itachi", 23, "Male", 0);
         //when
         mockMvcClient.perform(MockMvcRequestBuilders.post("/employees")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(newEmployee)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(newEmployee)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(notNullValue()))
                 .andExpect(jsonPath("$.name").value(newEmployee.getName()))
                 .andExpect(jsonPath("$.age").value(newEmployee.getAge()))
                 .andExpect(jsonPath("$.gender").value(newEmployee.getGender()))
                 .andExpect(jsonPath("$.salary").value(newEmployee.getSalary()));
+    }
+
+    @Test
+    void should_return_no_content_status_when_delete_employees_given_employee_id_to_be_deleted() throws Exception {
+        //given
+        Employee employeeJens = employeeRepository.addEmployee(new Employee(0L, 2L, "Jens", 23, "Male", 123123));
+        Long employeeIdToBeDeleted = 1L;
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/" + employeeIdToBeDeleted))
+                .andExpect(status().isNoContent());
     }
 }
