@@ -11,7 +11,7 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee create(Employee employee) {
+    public Employee createEmployee(Employee employee) {
         if (employee.hasInvalidAge(employee)) {
             throw new EmployeeCreateException();
         }
@@ -19,9 +19,12 @@ public class EmployeeService {
         return employeeRepository.addEmployee(employee);
     }
 
-    public void delete(Long id) {
+    public void deleteEmployee(Long id) {
         Employee matchedEmployee = employeeRepository.findEmployeeById(id);
         matchedEmployee.setActiveStatus(Boolean.FALSE);
         employeeRepository.updateEmployee(id, matchedEmployee);
+    }
+    public Employee updateEmployee(Long id, Employee updatedEmployee) {
+        return employeeRepository.updateEmployee(id, updatedEmployee);
     }
 }
