@@ -39,12 +39,12 @@ public class CompanyController {
         return companyRepository.addCompany(company);
     }
 
-    @PutMapping("/updateCompany/{id}")
+    @PutMapping("/{id}")
     public Company updateCompany(@PathVariable Long id, @RequestBody Company updatedCompany) {
         return companyRepository.updateCompany(id, updatedCompany);
     }
 
-    @DeleteMapping("/deleteCompany/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String deleteCompany(@PathVariable Long id) {
         if (!companyRepository.deleteCompany(id)) {
