@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -90,22 +91,16 @@ public class EmployeeApiTest {
     @Test
     void should_return_new_employee_when_post_employee_given_new_employee_JSON_format() throws Exception {
         //given
-        String newEmployeeJSON = "{\n" +
-                "    \"name\": \"Itachi\",\n" +
-                "    \"age\": 23,\n" +
-                "    \"gender\": \"Male\",\n" +
-                "    \"salary\": 0\n" +
-                "}";
+        Employee newEmployee = new Employee(0L, 3L, "Itachi", 23, "Male", 0);
         //when
         mockMvcClient.perform(MockMvcRequestBuilders.post("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(newEmployeeJSON))
+                .content(new ObjectMapper().writeValueAsString(newEmployee)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(notNullValue()))
-                .andExpect(jsonPath("$.name").value("Itachi"))
-                .andExpect(jsonPath("$.age").value(23))
-                .andExpect(jsonPath("$.gender").value("Male"))
-                .andExpect(jsonPath("$.salary").value(0));
-        //then
+                .andExpect(jsonPath("$.name").value(newEmployee.getName()))
+                .andExpect(jsonPath("$.age").value(newEmployee.getAge()))
+                .andExpect(jsonPath("$.gender").value(newEmployee.getGender()))
+                .andExpect(jsonPath("$.salary").value(newEmployee.getSalary()));
     }
 }
