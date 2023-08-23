@@ -4,6 +4,8 @@ import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 
+import java.util.List;
+
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
@@ -26,5 +28,9 @@ public class EmployeeService {
     }
     public Employee updateEmployee(Long id, Employee updatedEmployee) {
         return employeeRepository.updateEmployee(id, updatedEmployee);
+    }
+
+    public List<Employee> findAllEmployees() {
+        return employeeRepository.listAllEmployees();
     }
 }
