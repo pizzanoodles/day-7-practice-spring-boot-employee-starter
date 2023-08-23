@@ -2,12 +2,10 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,9 +29,16 @@ public class EmployeeServiceTest {
         //then
         assertEquals(savedEmployee.getId(), employeeResponse.getId());
         assertEquals("Jens", employeeResponse.getName());
-        assertEquals(Integer.valueOf(23), employeeResponse.getAge());
+        assertEquals(23, employeeResponse.getAge());
         assertEquals("Male", employeeResponse.getGender());
-        assertEquals(Integer.valueOf(1000), employeeResponse.getSalary());
-
+        assertEquals(1000, employeeResponse.getSalary());
+    }
+    @Test
+    void should__when__given_() {
+    //given
+     
+     //when
+     
+     //then
     }
 }
