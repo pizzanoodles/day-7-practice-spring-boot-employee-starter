@@ -25,4 +25,8 @@ public class CompanyService {
     public List<Employee> getEmployeesByCompanyId(Long id) {
         return companyRepository.getEmployeesByCompanyId(id);
     }
+
+    public List<Company> getCompaniesByPage(Long pageNumber, Long pageSize) {
+        return companyRepository.listCompaniesByPage(pageNumber, pageSize);
+    }
 }
