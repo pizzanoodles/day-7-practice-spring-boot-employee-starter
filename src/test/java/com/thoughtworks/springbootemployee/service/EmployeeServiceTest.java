@@ -169,4 +169,25 @@ public class EmployeeServiceTest {
         //then
         assertEquals(firstTwoPageOne, employeesByPage);
     }
+
+    @Test
+    void should_return_employee_when_get_employee_given_employee_id() {
+        //given
+        Employee employee1 = new Employee(1L, 2L, "Ranni", 29, "Female", 25100);
+        Employee employee2 = new Employee(2L, 1L, "Melina", 26, "Female", 19500);
+        when(mockedEmployeeRepository.findEmployeeById(employee1.getId())).thenReturn(employee1);
+        when(mockedEmployeeRepository.findEmployeeById(employee2.getId())).thenReturn(employee2);
+        //when
+        Employee findFirstEmployeeResponse = employeeService.findEmployeeById(employee1.getId());
+        Employee findSecondEmployeeResponse = employeeService.findEmployeeById(employee2.getId());
+        //then
+        assertEquals(employee1.getName(), findFirstEmployeeResponse.getName());
+        assertEquals(employee1.getAge(), findFirstEmployeeResponse.getAge());
+        assertEquals(employee1.getGender(), findFirstEmployeeResponse.getGender());
+        assertEquals(employee1.getSalary(), findFirstEmployeeResponse.getSalary());
+        assertEquals(employee2.getName(), findSecondEmployeeResponse.getName());
+        assertEquals(employee2.getAge(), findSecondEmployeeResponse.getAge());
+        assertEquals(employee2.getGender(), findSecondEmployeeResponse.getGender());
+        assertEquals(employee2.getSalary(), findSecondEmployeeResponse.getSalary());
+    }
 }
