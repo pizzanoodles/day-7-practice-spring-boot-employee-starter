@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -77,6 +76,18 @@ public class CompanyServiceTest {
         //then
         assertNotEquals(companies, companiesByPageResponse);
         assertEquals(firstTwoCompanies, companiesByPageResponse);
+    }
+
+    @Test
+    void should_return_new_company_when_post_companies_given_new_company() {
+        //given
+        Company newCompanyToAdd = new Company(null, "PLDT");
+        Company addedCompany = new Company(1L, "PLDT");
+        when(companyRepository.addCompany(newCompanyToAdd)).thenReturn(addedCompany);
+        //when
+        Company companyAddedResponse = companyService.createCompany(newCompanyToAdd);
+        //then
+        assertEquals(addedCompany, companyAddedResponse);
     }
 
 }
