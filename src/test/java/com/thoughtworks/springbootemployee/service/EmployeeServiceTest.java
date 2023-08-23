@@ -8,6 +8,8 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -114,5 +116,19 @@ public class EmployeeServiceTest {
         Employee updateResponse = employeeService.updateEmployee(oldEmployee.getId(), updatedEmployee);
         //then
         assertNotNull(updateResponse);
+    }
+
+    @Test
+    void should_return_list_of_employees_when_get_employees_given_some_employees() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1L, 2L, "Tobirama", 42, "Male", 2000));
+        employees.add(new Employee(2L, 2L, "Tsunade", 65, "Female", 15000));
+        employees.add(new Employee(3L, 1L, "Madara", 39, "Male", 0));
+        when(mockedEmployeeRepository.listAllEmployees()).thenReturn(employees);
+        //when
+        List<Employee> employeesResponse = employeeService.findAllEmployees();
+        //then
+        assertEquals(employees, employeesResponse);
     }
 }
