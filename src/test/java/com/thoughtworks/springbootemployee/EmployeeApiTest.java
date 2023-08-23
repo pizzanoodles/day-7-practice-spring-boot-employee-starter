@@ -109,7 +109,7 @@ public class EmployeeApiTest {
     @Test
     void should_return_no_content_status_when_delete_employees_given_employee_id_to_be_deleted() throws Exception {
         //given
-        Employee employeeJens = employeeRepository.addEmployee(new Employee(0L, 2L, "Jens", 23, "Male", 123123));
+        employeeRepository.addEmployee(new Employee(0L, 2L, "Jens", 23, "Male", 123123));
         Long employeeIdToBeDeleted = 1L;
         //when
         mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/" + employeeIdToBeDeleted))
@@ -119,7 +119,7 @@ public class EmployeeApiTest {
     @Test
     void should_return_updated_employee_when_update_employees_given_employee_id_to_be_updated_and_updated_employee() throws Exception {
         //given
-        Employee employeeJens = employeeRepository.addEmployee(new Employee(0L, 2L, "Jens", 23, "Male", 123123));
+        employeeRepository.addEmployee(new Employee(0L, 2L, "Jens", 23, "Male", 123123));
         Long employeeIdToBeUpdated = 1L;
         String updatedEmployeeInfo = "{\n" +
                 "    \"age\" : \"72\",\n" +
@@ -150,7 +150,13 @@ public class EmployeeApiTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name").value(employee1.getName()))
-                .andExpect(jsonPath("$[1].name").value(employee2.getName()));
+                .andExpect(jsonPath("$[0].age").value(employee1.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(employee1.getGender()))
+                .andExpect(jsonPath("$[0].salary").value(employee1.getSalary()))
+                .andExpect(jsonPath("$[1].name").value(employee2.getName()))
+                .andExpect(jsonPath("$[1].age").value(employee2.getAge()))
+                .andExpect(jsonPath("$[1].gender").value(employee2.getGender()))
+                .andExpect(jsonPath("$[1].salary").value(employee2.getSalary()));
         //then
     }
 }
