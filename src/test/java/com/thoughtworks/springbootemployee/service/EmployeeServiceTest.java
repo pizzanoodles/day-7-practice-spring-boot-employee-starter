@@ -28,7 +28,6 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee(null, 2L, "Jens", 23, "Male", 1000);
         Employee savedEmployee = new Employee(1L, 2L, "Jens", 23, "Male", 1000);
-        ;
         when(mockedEmployeeRepository.addEmployee(employee)).thenReturn(savedEmployee);
         //when
         Employee employeeResponse = employeeService.createEmployee(employee);
@@ -167,6 +166,7 @@ public class EmployeeServiceTest {
         List<Employee> employeesByPage = employeeService.listEmployeesByPage(pageNumber, pageSize);
         //then
         assertEquals(firstTwoPageOne, employeesByPage);
+        assertNotEquals(employees.size(), employeesByPage.size());
     }
 
     @Test
