@@ -56,7 +56,7 @@ public class CompanyRepository {
         return companies.stream()
                 .mapToLong(Company::getId)
                 .max()
-                .orElse(0L) + 1;
+                .orElse(0L) + 1; // TODO: you can make these into const - create a separate Const class
     }
 
     public Company updateCompany(Long id, Company updatedCompany) {

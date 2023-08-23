@@ -18,6 +18,8 @@ public class EmployeeRepository {
         employees.add(new Employee(5L, 5L, "Elen", 34, "Female", 9000));
     }
 
+    // TODO: change id to employeeId
+
     public List<Employee> listAllEmployees() {
         return employees;
     }

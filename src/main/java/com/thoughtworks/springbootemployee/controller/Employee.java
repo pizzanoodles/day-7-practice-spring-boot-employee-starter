@@ -1,13 +1,13 @@
 package com.thoughtworks.springbootemployee.controller;
 
 public class Employee {
-    private final Long id;
+    private final Long id; //TODO: change id to employeeId
     private Long companyId;
     private String name;
     private Integer age;
     private String gender;
     private Integer salary;
-
+    //TODO: not recommended to use primitive types
     public Employee(long id, Long companyId, String name, Integer age, String gender, Integer salary) {
         this.id = id;
         this.companyId = companyId;
@@ -17,7 +17,7 @@ public class Employee {
         this.salary = salary;
     }
 
-
+    //TODO: removed unused methods
     public void setName(String name) {
         this.name = name;
     }

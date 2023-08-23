@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// TODO: you can add SupressWarning("all") annotation
+
 @RequestMapping("/employees")
 @RestController
 public class EmployeeController {
@@ -40,7 +42,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteEmployee(@PathVariable Long id) {
+    public String deleteEmployee(@PathVariable Long id) { //TODO out of scope, should be coming from business side
         if (!employeeRepository.deleteEmployee(id)) {
             throw new EmployeeNotFoundException();
         }
