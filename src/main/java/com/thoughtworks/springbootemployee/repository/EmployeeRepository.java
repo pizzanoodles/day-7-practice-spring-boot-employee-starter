@@ -51,10 +51,7 @@ public class EmployeeRepository {
     }
 
     public Employee updateEmployee(Long id, Employee updatedEmployee) {
-        Employee employeeToBeUpdated = employees.stream()
-                .filter(employee -> employee.getId().equals(id))
-                .findFirst()
-                .orElseThrow(EmployeeNotFoundException::new);
+        Employee employeeToBeUpdated = findEmployeeById(id);
         employeeToBeUpdated.setAge(updatedEmployee.getAge() != null ? updatedEmployee.getAge() : employeeToBeUpdated.getAge());
         employeeToBeUpdated.setSalary(updatedEmployee.getSalary() != null ? updatedEmployee.getSalary() : employeeToBeUpdated.getSalary());
         return employeeToBeUpdated;
