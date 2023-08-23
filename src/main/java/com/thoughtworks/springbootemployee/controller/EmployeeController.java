@@ -31,12 +31,12 @@ public class EmployeeController {
         return employeeRepository.addEmployee(employee);
     }
 
-    @PutMapping("/updateEmployee/{id}")
+    @PutMapping("/{id}")
     public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
         return employeeRepository.updateEmployee(id, updatedEmployee);
     }
 
-    @DeleteMapping("/deleteEmployee/{id}")
+    @DeleteMapping("/{id}")
     public String deleteEmployee(@PathVariable Long id) {
         if (!employeeRepository.deleteEmployee(id)) {
             throw new EmployeeNotFoundException();
