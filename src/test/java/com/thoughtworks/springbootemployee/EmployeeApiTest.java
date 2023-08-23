@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
@@ -112,5 +114,23 @@ public class EmployeeApiTest {
         //when
         mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/" + employeeIdToBeDeleted))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void should_return_updated_employee_when_update_employees_given_employee_id_to_be_updated_and_updated_employee() throws Exception {
+        //given
+        Employee employeeJens = employeeRepository.addEmployee(new Employee(0L, 2L, "Jens", 23, "Male", 123123));
+        Long employeeIdToBeUpdated = 1L;
+        String updatedEmployeeInfo = "{\n" +
+                "    \"age\" : \"72\",\n" +
+                "    \"salary\" : 2000000\n" +
+                "}";
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.put("/employees/" + employeeIdToBeUpdated)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updatedEmployeeInfo))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.age").value(72))
+                .andExpect(jsonPath("$.salary").value(2000000));
     }
 }
