@@ -15,6 +15,13 @@ public class EmployeeService {
         if (employee.hasInvalidAge(employee)) {
             throw new EmployeeCreateException();
         }
+        employee.setActiveStatus(Boolean.TRUE);
         return employeeRepository.addEmployee(employee);
+    }
+
+    public void delete(Long id) {
+        Employee matchedEmployee = employeeRepository.findEmployeeById(id);
+        matchedEmployee.setActiveStatus(Boolean.FALSE);
+        employeeRepository.updateEmployee(id, matchedEmployee);
     }
 }
