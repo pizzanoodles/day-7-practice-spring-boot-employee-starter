@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
+import com.thoughtworks.springbootemployee.exception.InactiveEmployeeException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class EmployeeService {
         employeeRepository.updateEmployee(id, matchedEmployee);
     }
     public Employee updateEmployee(Long id, Employee updatedEmployee) {
+        if (!employeeRepository.findEmployeeById(id).isActive()) {
+            throw new InactiveEmployeeException();
+        }
         return employeeRepository.updateEmployee(id, updatedEmployee);
     }
 
