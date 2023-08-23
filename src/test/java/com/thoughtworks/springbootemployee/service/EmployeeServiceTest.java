@@ -62,4 +62,22 @@ public class EmployeeServiceTest {
         assertEquals("Employee must be 18~65 years old", employeeCreateException.getMessage());
     }
 
+    @Test
+    void should_return_active_status_true_when_create_given_new_employee() {
+        //given
+        Employee employee = new Employee(null, 2L, "Jens", 23, "Male", 1000);
+        Employee savedEmployee = new Employee(1L, 2L, "Jens", 23, "Male", 1000);
+        ;
+        when(mockedEmployeeRepository.addEmployee(employee)).thenReturn(savedEmployee);
+        //when
+        Employee employeeResponse = employeeService.create(employee);
+
+        //then
+        assertEquals(savedEmployee.getId(), employeeResponse.getId());
+        assertEquals("Jens", employeeResponse.getName());
+        assertEquals(23, employeeResponse.getAge());
+        assertEquals("Male", employeeResponse.getGender());
+        assertEquals(1000, employeeResponse.getSalary());
+        assertTrue(employeeResponse.isActive());
+    }
 }
