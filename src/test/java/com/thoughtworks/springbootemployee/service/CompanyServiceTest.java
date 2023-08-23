@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -59,4 +60,23 @@ public class CompanyServiceTest {
         //then
         assertEquals(employees, employeesByCompanyIdResponse);
     }
+
+    @Test
+    void should_return_first_two_companies_when_get_companies_given_pageNumber_and_pageSize_and_some_companies() {
+        //given
+        Company company1 = new Company(1L, "Logitech");
+        Company company2 = new Company(2L, "Razer");
+        Company company3 = new Company(3L, "Asus");
+        List<Company> companies = List.of(company1, company2, company3);
+        List<Company> firstTwoCompanies = List.of(company1, company2);
+        Long pageNumber = 1L;
+        Long pageSize = 2L;
+        when(companyRepository.listCompaniesByPage(pageNumber, pageSize)).thenReturn(firstTwoCompanies);
+        //when
+        List<Company> companiesByPageResponse = companyService.getCompaniesByPage(pageNumber, pageSize);
+        //then
+        assertNotEquals(companies, companiesByPageResponse);
+        assertEquals(firstTwoCompanies, companiesByPageResponse);
+    }
+
 }
