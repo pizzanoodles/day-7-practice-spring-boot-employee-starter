@@ -53,10 +53,7 @@ public class EmployeeRepository {
                 .filter(employee -> employee.getId().equals(id))
                 .findFirst()
                 .orElseThrow(EmployeeNotFoundException::new);
-        employeeToBeUpdated.setName(updatedEmployee.getName() != null ? updatedEmployee.getName() : employeeToBeUpdated.getName());
-        employeeToBeUpdated.setCompanyId(updatedEmployee.getCompanyId() != null ? updatedEmployee.getCompanyId() : employeeToBeUpdated.getCompanyId());
         employeeToBeUpdated.setAge(updatedEmployee.getAge() != null ? updatedEmployee.getAge() : employeeToBeUpdated.getAge());
-        employeeToBeUpdated.setGender(updatedEmployee.getGender() != null ? updatedEmployee.getGender() : employeeToBeUpdated.getGender());
         employeeToBeUpdated.setSalary(updatedEmployee.getSalary() != null ? updatedEmployee.getSalary() : employeeToBeUpdated.getSalary());
         return employeeToBeUpdated;
     }
