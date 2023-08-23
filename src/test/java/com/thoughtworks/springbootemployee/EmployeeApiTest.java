@@ -22,10 +22,12 @@ public class EmployeeApiTest {
     private EmployeeRepository employeeRepository;
     @Autowired
     private MockMvc mockMvcClient;
+
     @BeforeEach
     void cleanupEmployeeData() {
         employeeRepository.cleanAll();
     }
+
     @Test
     void should_return_list_of_given_employees_when_get_request_all_employees_given_some_employees() throws Exception {
         //given
@@ -33,11 +35,29 @@ public class EmployeeApiTest {
         //when
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$",hasSize(1)))
-                .andExpect(jsonPath("$[0].id" ).value(employeeJens.getId()))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(employeeJens.getId()))
                 .andExpect(jsonPath("$[0].name").value(employeeJens.getName()))
                 .andExpect(jsonPath("$[0].age").value(employeeJens.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(employeeJens.getGender()))
                 .andExpect(jsonPath("$[0].salary").value(employeeJens.getSalary()))
                 .andExpect(jsonPath("$[0].companyId").value(employeeJens.getCompanyId()));
+    }
+
+    @Test
+    void should_return_employee_when_get_employee_given_employee_id() throws Exception {
+        //given
+        Employee employeeJens = employeeRepository.addEmployee(new Employee(0L, 2L, "Jens", 23, "Male", 123123));
+        employeeRepository.addEmployee(new Employee(0L, 2L, "Ron", 23, "Male", 456456));
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + employeeJens.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(employeeJens.getId()))
+                .andExpect(jsonPath("$.name").value(employeeJens.getName()))
+                .andExpect(jsonPath("$.age").value(employeeJens.getAge()))
+                .andExpect(jsonPath("$.salary").value(employeeJens.getSalary()))
+                .andExpect(jsonPath("$.companyId").value(employeeJens.getCompanyId()));
+
+        //then
     }
 }
