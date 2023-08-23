@@ -90,4 +90,15 @@ public class CompanyServiceTest {
         assertEquals(addedCompany, companyAddedResponse);
     }
 
+    @Test
+    void should_return_updated_company_when_update_company_given_updated_company_info() {
+        //given
+        Company oldCompany = new Company(1L, "Asus");
+        Company newCompany = new Company(1L, "Asrock");
+        when(companyRepository.updateCompany(oldCompany.getId(), newCompany)).thenReturn(newCompany);
+        //when
+        Company updatedCompanyResponse = companyService.updateCompany(oldCompany.getId(), newCompany);
+        //then
+        assertEquals(newCompany, updatedCompanyResponse);
+    }
 }
