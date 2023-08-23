@@ -120,6 +120,7 @@ public class EmployeeApiTest {
     void should_return_updated_employee_when_update_employees_given_employee_id_to_be_updated_and_updated_employee() throws Exception {
         //given
         Employee existingEmployee = employeeRepository.addEmployee(new Employee(0L, 2L, "Jens", 23, "Male", 123123));
+        existingEmployee.setActiveStatus(Boolean.TRUE);
         Long employeeIdToBeUpdated = 1L;
         String updatedEmployeeInfo = "{\n" +
                 "    \"age\" : \"72\",\n" +
