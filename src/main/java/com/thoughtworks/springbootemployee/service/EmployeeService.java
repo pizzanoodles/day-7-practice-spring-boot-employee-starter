@@ -33,4 +33,8 @@ public class EmployeeService {
     public List<Employee> findAllEmployees() {
         return employeeRepository.listAllEmployees();
     }
+
+    public List<Employee> findEmployeesByGender(String gender) {
+        return employeeRepository.findEmployeeByGender(gender);
+    }
 }
