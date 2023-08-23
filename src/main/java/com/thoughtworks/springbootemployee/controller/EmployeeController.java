@@ -45,7 +45,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteEmployee(@PathVariable Long id) { //TODO out of scope, should be coming from business side
+    public void deleteEmployee(@PathVariable Long id) {
         if (!employeeRepository.deleteEmployee(id)) {
             throw new EmployeeNotFoundException();
         }
