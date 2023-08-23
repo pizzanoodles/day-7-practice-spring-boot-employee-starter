@@ -150,4 +150,23 @@ public class EmployeeServiceTest {
         assertNotEquals(employees, employeeResponseFemales);
         assertNotEquals(employees, employeeResponseMales);
     }
+
+    @Test
+    void should_return_employees_by_page_when_get_employees_given_page_number_and_page_size_and_some_employees() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        Employee employeeTobirama = new Employee(1L, 2L, "Tobirama", 42, "Male", 2000);
+        Employee employeeTsunade = new Employee(2L, 2L, "Tsunade", 65, "Female", 15000);
+        employees.add(employeeTobirama);
+        employees.add(employeeTsunade);
+        employees.add(new Employee(3L, 1L, "Madara", 39, "Male", 0));
+        Long pageNumber = 1L;
+        Long pageSize = 2L;
+        List<Employee> firstTwoPageOne = List.of(employeeTobirama, employeeTsunade);
+        when(mockedEmployeeRepository.listEmployeesByPage(pageNumber, pageSize)).thenReturn(firstTwoPageOne);
+        //when
+        List<Employee> employeesByPage = employeeService.listEmployeesByPage(pageNumber, pageSize);
+        //then
+        assertEquals(firstTwoPageOne, employeesByPage);
+    }
 }
