@@ -101,4 +101,15 @@ public class CompanyServiceTest {
         //then
         assertEquals(newCompany, updatedCompanyResponse);
     }
+
+    @Test
+    void should_return_no_content_when_delete_companies_given_company_id() {
+        //given
+        Company company = new Company(1L, "Be Quiet!");
+        when(companyRepository.deleteCompany(company.getId())).thenReturn(true);
+        //when
+        boolean deleteCompanyResponse = companyService.deleteCompany(company.getId());
+        //then
+        assertTrue(deleteCompanyResponse);
+    }
 }
