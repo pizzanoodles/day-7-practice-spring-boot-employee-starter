@@ -1,8 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
+import com.thoughtworks.springbootemployee.exception.InactiveEmployeeException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,10 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class EmployeeServiceTest {
@@ -189,5 +186,20 @@ public class EmployeeServiceTest {
         assertEquals(employee2.getAge(), findSecondEmployeeResponse.getAge());
         assertEquals(employee2.getGender(), findSecondEmployeeResponse.getGender());
         assertEquals(employee2.getSalary(), findSecondEmployeeResponse.getSalary());
+    }
+
+    @Test
+    void should_throw_InactiveEmployeeException_when_update_employees_given_employee_id_of_inactive_employee() {
+        //given
+        Employee employee = new Employee(1L, 2L, "Jens", 23, "Male", 100000);
+        Employee updatedEmployee = new Employee(1L, 2L, "Jens", 24, "Male", 150000);
+        employee.setActiveStatus(Boolean.FALSE);
+        when(mockedEmployeeRepository.findEmployeeById(employee.getId())).thenReturn(employee);
+        //when
+        InactiveEmployeeException inactiveEmployeeException = assertThrows(InactiveEmployeeException.class, () -> {
+            employeeService.updateEmployee(employee.getId(), updatedEmployee);
+        });
+        //then
+        assertEquals("Employee is inactive", inactiveEmployeeException.getMessage());
     }
 }
