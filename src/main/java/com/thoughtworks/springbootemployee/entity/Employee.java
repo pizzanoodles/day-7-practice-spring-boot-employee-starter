@@ -1,4 +1,4 @@
-package com.thoughtworks.springbootemployee.controller;
+package com.thoughtworks.springbootemployee.entity;
 
 public class Employee {
     private final Long id; //TODO: change id to employeeId
